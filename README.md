@@ -15,9 +15,9 @@
 
 
 <div align="center">
-  <img src="capturas/cap4.png" >
+  <img src="capturas/cap4.PNG" >
   <img src="capturas/cap1.PNG" >
   <img src="capturas/cap2.PNG" >
   <img src="capturas/cap3.PNG" >
-<img src="capturas/cap5.png" >
+<img src="capturas/cap5.PNG" >
 </div>
