@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Página de Registro</title>
+</head>
+<body>
+    <h1>Página de Registro</h1>
+    <div th:if="${errorPasswords}">
+        <p style="color: red;">Error de contraseñas: <span th:text="${errorPasswords}"></span></p>
+    </div>
+    <form th:action="@{/registration}" method="POST" th:object="${user}">
+        <label>
+            Email:
+            <input type="text" th:field="*{email}">
+        </label>
+        <label>
+            Password:
+            <input type="password" th:field="*{password}">
+        </label>
+        <label>
+            Confirmar Password:
+            <input type="password" th:field="*{passwordConfirmation}">
+        </label>
+        <input type="submit" value="Crear Cuenta">
+    </form>
+    <a href="/">Volver al index</a>
+    <a href="/login">Ir a Login</a>
+</body>
+</html>
