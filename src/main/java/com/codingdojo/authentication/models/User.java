@@ -1,6 +1,9 @@
 package com.codingdojo.authentication.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -11,7 +14,10 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Email(message = "Email no es válido.")
+    @NotBlank(message = "El mail no debe ser nulo")
     private String email;
+    @Size(min=5, message="El password debe ser de 6 caracteres como mínimo.")
     private String password;
     @Transient // Esto para no guardar en la base de datos la pass dos veces
     private String passwordConfirmation;

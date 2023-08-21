@@ -5,11 +5,24 @@ import com.codingdojo.authentication.repositories.UserRepository;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
     public UserService(UserRepository userRepository){
         this.userRepository = userRepository;
+    }
+
+    //Para traer todos los usuarios que hay registrados
+    public List<String> todosLosMailsDeUsuario(){
+        List<String> mailsUsuarios = new ArrayList<>();
+        for(User usuario : userRepository.findAll()){
+
+            mailsUsuarios.add(usuario.getEmail());
+        }
+        return mailsUsuarios;
     }
 
     // Para registrar el usuario y hashear la password

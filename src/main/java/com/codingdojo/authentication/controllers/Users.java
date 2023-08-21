@@ -1,7 +1,8 @@
-package com.codingdojo.authentication.users;
+package com.codingdojo.authentication.controllers;
 
 import com.codingdojo.authentication.models.User;
 import com.codingdojo.authentication.services.UserService;
+import com.codingdojo.authentication.validator.UserValidator;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -17,8 +18,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class Users {
     private final UserService userService;
 
-    public  Users(UserService userService){
+    //Para validaciones personalizadas
+    private final UserValidator userValidator;
+
+
+
+    public  Users(UserService userService, UserValidator userValidator){
         this.userService = userService;
+        this.userValidator = userValidator;
     }
 
     // GET Y POST PARA REGISTRO ----------------------
@@ -29,15 +36,18 @@ public class Users {
 
     @PostMapping("/registration")
     public String registerUser(@Valid @ModelAttribute("user") User user,
-                               BindingResult result, HttpSession session, RedirectAttributes redirectAttributes){
+                               BindingResult result, HttpSession session){ //SI QUIERO USAR MENSAJES FLASH RECORDAR PONER RedirectAttributes redirectAttributes
+        userValidator.validate(user,result);
         if(result.hasErrors()){
-            return "redirect:/registration";
+            System.out.println("hay error arriba");
+            return "registrationPage";
         }else{
 
-            if(!user.getPassword().equals(user.getPasswordConfirmation())){
-                redirectAttributes.addFlashAttribute("errorPasswords", "Las contraseñas no coinciden!");
-                return "redirect:/registration";
-            }
+        //    if(!user.getPassword().equals(user.getPasswordConfirmation())){ //ESTO ES PARA ENVIAR UN MENSAJE FLASH PARA EL ERROR, ES OTRA FORMITA DE COMUNICAR
+        //        redirectAttributes.addFlashAttribute("errorPasswords", "Las contraseñas no coinciden!");
+        //        System.out.println("contras no coinciden");
+        //        return "redirect:/registration";
+        //    }
 
             userService.registerUser(user);
             session.setAttribute("idLogueado", user.getId());//Guardo el id del usuario en la sesion

@@ -10,9 +10,17 @@
 <body>
     <h1>Página de Registro</h1>
     <div th:if="${errorPasswords}">
-        <p style="color: red;">Error de contraseñas: <span th:text="${errorPasswords}"></span></p>
+        <p>Error de contraseñas: <span th:text="${errorPasswords}"></span></p>
     </div>
+
     <form th:action="@{/registration}" method="POST" th:object="${user}">
+        <div th:if="${#fields.hasErrors()}">
+            <ul>
+                <li th:each="error : ${#fields.errors()}">
+                    <span th:text="${error}"></span>
+                </li>
+            </ul>
+        </div>
         <label>
             Email:
             <input type="text" th:field="*{email}">
@@ -20,6 +28,7 @@
         <label>
             Password:
             <input type="password" th:field="*{password}">
+
         </label>
         <label>
             Confirmar Password:
